@@ -29,30 +29,49 @@ namespace MathsOperators
 
         private void calculateClick(object sender, RoutedEventArgs e)
         {
-            if ((bool)addition.IsChecked)
+            try
             {
-                addValues();
+
+
+                if ((bool)addition.IsChecked)
+                {
+                    addValues();
+                }
+                else if ((bool)subtraction.IsChecked)
+                {
+                    subtractValues();
+                }
+                else if ((bool)multiplication.IsChecked)
+                {
+                    multiplyValues();
+                }
+                else if ((bool)division.IsChecked)
+                {
+                    divideValues();
+                }
+                else if ((bool)remainder.IsChecked)
+                {
+                    remainderValues();
+                }
+                else
+                {
+                    throw new InvalidOperationException("No operator selected");
+                }
             }
-            else if ((bool)subtraction.IsChecked)
+            catch (FormatException fEx)
             {
-                subtractValues();
+                result.Text = fEx.Message;
             }
-            else if ((bool)multiplication.IsChecked)
+            catch (InvalidOperationException ioEx)
             {
-                multiplyValues();
+                result.Text = ioEx.Message;
             }
-            else if ((bool)division.IsChecked)
-            {
-                divideValues();
-            }
-            else if ((bool)remainder.IsChecked)
-            {
-                remainderValues();
-            }
+
         }
 
         private void addValues()
         {
+            
             int lhs = int.Parse(lhsOperand.Text);
             int rhs = int.Parse(rhsOperand.Text);
             int outcome = 0;
@@ -60,6 +79,8 @@ namespace MathsOperators
             outcome = lhs + rhs;
             expression.Text = $"{lhs} + {rhs}";
             result.Text = outcome.ToString();
+            
+
         }
 
         private void subtractValues()
